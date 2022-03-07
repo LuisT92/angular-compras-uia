@@ -1,3 +1,6 @@
 <h2>Detalles {{reporte.name}}</h2>
 <div><span>id: </span>{{reporte.id}}</div>
-<div><span>name: </span>{{reporte.name}}</div>
+<div>
+  <label for="name">Nombre del Reporte: </label>
+  <input id="name" [(ngModel)]="reporte.name" placeholder="name">
+</div>
