@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { } from '@angular/forms';
+import { ReporteService } from '../reporte.service';
 import { IReporte } from './IReporte';
 
 @Component({
@@ -9,13 +10,24 @@ import { IReporte } from './IReporte';
 })
 export class ReportesComponent implements OnInit {
 
-  reportes = "proyecto1";
   public reporte: IReporte = {id: 1, name: "Luis", codigo: "123", vendedor: 1,
   clasficacionVendedor: 1, total: 1, entrega: 1};
 
-  constructor() { }
+  reportes: IReporte[] = [];
 
-  ngOnInit(): void {
+  selectedReporte?: IReporte;
+
+  onSelect(reporte: IReporte): void {
+    this.selectedReporte = reporte;
   }
 
+  constructor(private datosReporte:ReporteService) { }
+
+  ngOnInit(): void {
+    this.datosReporte.getReportes().subscribe((data: any[])=>{
+      console.log(data);
+      this.reportes = data;
+  });
+
+  }
 }

@@ -1,21 +1,28 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, tap } from 'rxjs';
-import { IReporte } from './reportes/IReporte';
+import {Injectable} from '@angular/core';
+import {catchError, Observable, of, tap} from 'rxjs';
+import {IReporte} from './reportes/IReporte';
+import {HttpClient} from '@angular/common/http';
+import {HttpHeaders} from '@angular/common/http';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ReporteService {
-  reporteUrl = "http://localhost:8080/reportes";
+
+  HttpOption =
+    {
+      headers: new HttpHeaders({'Content Type': 'application/json'})
+    }
+  reportesUrl = "http://localhost:4200"
 
   constructor(private http: HttpClient) {
-   }
+  }
 
 public getReportes()
 {
-        return this.http.get<IReporte[]>(this.reporteUrl)
+        return this.http.get<IReporte[]>(this.reportesUrl)
       .pipe(
         tap(_ => console.log('extrayendo catalogos')),
       catchError(this.handleError<IReporte[]>('loadReporte', []))
@@ -31,7 +38,7 @@ private handleError<T> (operation = 'operation', result?: T){
 }
 
 agregaReporte(Reporte: IReporte): Observable<IReporte>{
-  return this.http.post<IReporte>(this.reporteUrl, Reporte, this.httpOptions).pipe(
+  return this.http.post<IReporte>(this.reporteUrl, Reporte, this.HttpOption).pipe(
     tap((newReporte: IReporte) => console.log(`added Reporte w/ id=${newReporte.id}`)),
     catchError(this.handleError<IReporte>('addReporte'))
   );
