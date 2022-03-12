@@ -1,6 +1,10 @@
 <h2>Detalles {{reporte.name}}</h2>
 <div><span>id: </span>{{reporte.id}}</div>
-<div>
-  <label for="name">Nombre del Reporte: </label>
-  <input id="name" [(ngModel)]="reporte.name" placeholder="name">
-</div>
+
+<ul class="reportes">
+<li *ngFor="let reporte of reportes">
+[class.selected]="reporte === selectedReporte"
+click (onSelect)="onSelect(proveedor)">
+<span class="badge">{{reporte.id}}</span> {{reporte.name}}
+</li>
+</ul>
